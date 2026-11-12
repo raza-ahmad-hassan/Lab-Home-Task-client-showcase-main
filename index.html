@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en" class="dark bg-[#07090e]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Craft Studio | Next-Generation Digital Experiences</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: '#07090e',
+            darker: '#040609',
+            card: '#0f1422',
+            accent: {
+              cyan: '#38bdf8',
+              indigo: '#6366f1',
+              purple: '#a855f7',
+              pink: '#ec4899',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Complete Inlined Scrollytelling Stylesheet (Guarantees 100% theme consistency on all CDNs) -->
+  <style>
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --bg-primary: #07090e;
+      --bg-secondary: #0d111a;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-bg: rgba(15, 23, 42, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-card: rgba(18, 26, 43, 0.85);
+      --glow-color: rgba(99, 102, 241, 0.35);
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #6366f1;
+      --input-bg: rgba(13, 17, 26, 0.8);
+      --input-border: rgba(255, 255, 255, 0.1);
+      --input-text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: var(--font-sans);
+      background-color: #07090e !important;
+      color: #f8fafc !important;
+      scroll-behavior: auto !important;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Ambient Glowing Background Lights */
+    .ambient-glow-wrapper {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.38;
+      will-change: transform;
+    }
+
+    .orb-1 {
+      top: -10%;
+      left: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.6) 0%, rgba(99, 102, 241, 0) 70%);
+      animation: floatOrb 22s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      top: 40%;
+      right: -5%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.5) 0%, rgba(14, 165, 233, 0) 70%);
+      animation: floatOrb 26s ease-in-out infinite alternate-reverse;
+    }
+
+    .orb-3 {
+      bottom: -10%;
+      left: 20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(168, 85, 247, 0) 70%);
+      animation: floatOrb 30s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 40px) scale(1.08); }
+      100% { transform: translate(-30px, 30px) scale(0.95); }
+    }
+
+    /* Subtle Grid Pattern Overlay */
+    .grid-bg-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .glass-panel-glow {
+      background: var(--glass-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.5), 0 0 40px -10px var(--glow-color);
+    }
+
+    /* Text Gradients */
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #ffffff 10%, #38bdf8 70%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-neon {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Browser Frame Mockup */
+    .browser-mockup {
+      position: relative;
+      background: #0f1422;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 30px 80px -15px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 60px -10px rgba(99, 102, 241, 0.3);
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .browser-header {
+      height: 42px;
+      background: #151b2c;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      z-index: 10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mac-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .mac-dot.red { background: #ef4444; }
+    .mac-dot.yellow { background: #f59e0b; }
+    .mac-dot.green { background: #10b981; }
+
+    .browser-address-bar {
+      flex: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      height: 26px;
+      background: #0b101c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #94a3b8;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .browser-body {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #090c14;
+    }
+
+    .browser-body img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #interactiveDesktopImg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      background-color: #090c14;
+      display: block;
+    }
+
+    /* ======================================================== */
+    /* AUTHENTIC PHYSICAL SMARTPHONE DEVICE (19.5:9 RATIO)     */
+    /* ======================================================== */
+    .mobile-viewport-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 900px;
+      perspective-origin: center center;
+    }
+
+    .mobile-viewport-card {
+      position: relative;
+      width: 240px;
+      height: 480px;
+      background: #080c14;
+      border-radius: 38px;
+      border: 3px solid #1e293b;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 25px 65px -10px rgba(0, 0, 0, 0.95),
+        0 0 40px -10px rgba(56, 189, 248, 0.3);
+      will-change: transform;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    /* Hardware Buttons */
+    .phone-button {
+      position: absolute;
+      background: #334155;
+      border-radius: 2px;
+      z-index: 10;
+    }
+    .phone-btn-action {
+      left: -5px;
+      top: 65px;
+      width: 3px;
+      height: 16px;
+      border-radius: 2px 0 0 2px;
+    }
+    .phone-btn-vol-up {
+      left: -5px;
+      top: 92px;
+      width: 3px;
+      height: 32px;
+      border-radius: 2px 0 0 2px;
+    }
+    .phone-btn-vol-down {
+      left: -5px;
+      top: 132px;
+      width: 3px;
+      height: 32px;
+      border-radius: 2px 0 0 2px;
+    }
+    .phone-btn-power {
+      right: -5px;
+      top: 105px;
+      width: 3px;
+      height: 44px;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Physical Dynamic Island */
+    .phone-dynamic-island {
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68px;
+      height: 18px;
+      background: #000000;
+      border-radius: 12px;
+      z-index: 25;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 8px;
+      gap: 6px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .phone-camera-lens {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      display: inline-block;
+    }
+
+    .phone-sensor-dot {
+      width: 3.5px;
+      height: 3.5px;
+      border-radius: 50%;
+      background: #080c14;
+      display: inline-block;
+    }
+
+    /* Viewport Screen */
+    .mobile-viewport-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 35px;
+      background: #090d16;
+    }
+
+    /* Portrait Image */
+    #mobilePortraitImg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Landscape Container (Counter-rotated inside phone) */
+    .mobile-landscape-container {
+      position: absolute;
+      width: 480px;
+      height: 240px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      transform-origin: center center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #mobileLandscapeImg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    /* Subtle Screen Reflection Glare */
+    .phone-screen-glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 50%);
+      z-index: 20;
+    }
+
+    /* Top Scroll Progress Line */
+    .scroll-progress-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #38bdf8, #ec4899);
+      z-index: 100;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Form Styles */
+    .form-input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: var(--input-text);
+      font-size: 15px;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    .form-input::placeholder {
+      color: #64748b;
+    }
+
+    /* Button with Gradient Glow */
+    .btn-glow {
+      position: relative;
+      background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 14px;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.6);
+    }
+
+    .btn-glow:active {
+      transform: translateY(0);
+    }
+
+    /* Minimal Mouse Wheel Animation */
+    @keyframes mousePulse {
+      0% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(7px); opacity: 0.2; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .mouse-dot-anim {
+      animation: mousePulse 2s ease-in-out infinite;
+    }
+
+    /* Gentle Levitation Float for Initial Showcase */
+    @keyframes levitate {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .levitate-float {
+      animation: levitate 4.5s ease-in-out infinite;
+    }
+
+    /* Orientation indicator pill */
+    .orientation-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- External Stylesheet Fallback -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-[#07090e] text-[#f8fafc] selection:bg-indigo-500 selection:text-white antialiased">
+
+  <!-- Ambient Glowing Backdrop -->
+  <div class="ambient-glow-wrapper">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <!-- Grid Background Overlay -->
+  <div class="grid-bg-overlay"></div>
+
+  <!-- Top Scroll Progress Line -->
+  <div id="scrollProgressLine" class="scroll-progress-line"></div>
+
+  <!-- Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel px-6 py-3 rounded-2xl shadow-2xl backdrop-blur-xl">
+
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-sky-500 to-emerald-400 p-[1.5px] transition-transform duration-300 group-hover:scale-105">
+          <div class="w-full h-full bg-[#090d16] rounded-[10px] flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-5 h-5 text-sky-400"></i>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-bold tracking-tight text-lg text-white">NEXUS<span class="text-sky-400">CRAFT</span></span>
+          <span class="text-[10px] uppercase font-mono tracking-widest text-slate-400">Digital Studio</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <button onclick="scrollToTarget('heroSection')" class="hover:text-white transition-colors">Overview</button>
+        <button onclick="scrollToTarget('desktopReveal')" class="hover:text-white transition-colors">Platform</button>
+        <button onclick="scrollToTarget('mobileStage')" class="hover:text-white transition-colors">Responsive</button>
+        <button onclick="scrollToTarget('contactSection')" class="hover:text-white transition-colors">Contact</button>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="flex items-center gap-3">
+        <button onclick="scrollToTarget('contactSection')" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-sky-500 text-white text-xs font-semibold tracking-wide uppercase hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-[1.02]">
+          <span>Start Project</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ======================================================== -->
+  <!-- HERO SECTION                                             -->
+  <!-- ======================================================== -->
+  <section id="heroSection" class="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-6 z-10">
+    <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+
+      <!-- Studio Intro Pill -->
+      <div id="heroBadge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-indigo-500/30 text-xs font-mono text-indigo-300 mb-6 shadow-xl backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>ARCHITECTING NEXT-GEN DIGITAL EXPERIENCES</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 id="heroTitle" class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+        <span class="block text-white">Experience Websites</span>
+        <span class="block text-gradient-neon">Beyond Two Dimensions</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p id="heroSubtitle" class="text-base sm:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed font-light">
+        A seamless visual journey of interactive scaling, full-viewport immersion, multi-device transformation, and high-performance design.
+      </p>
+
+      <!-- Scroll Indicator -->
+      <div id="heroMouseIndicator" class="flex flex-col items-center cursor-pointer mb-2" onclick="scrollToTarget('masterScrollStage')">
+        <div class="w-6 h-10 rounded-full border-2 border-slate-500/50 flex items-start justify-center p-1.5 transition-colors hover:border-sky-500">
+          <div class="w-1.5 h-2.5 bg-sky-400 rounded-full mouse-dot-anim"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Initial Landing View: Desktop Preview with Levitation Float -->
+    <div id="initialMockupPreview" class="w-full max-w-5xl mt-6 mx-auto relative levitate-float">
+      <div class="browser-mockup relative border border-white/10 shadow-2xl">
+        <!-- Browser Top Bar -->
+        <div class="browser-header">
+          <div class="flex items-center gap-2">
+            <span class="mac-dot red"></span>
+            <span class="mac-dot yellow"></span>
+            <span class="mac-dot green"></span>
+          </div>
+          <div class="browser-address-bar">
+            <i data-lucide="lock" class="w-3 h-3 text-emerald-400"></i>
+            <span>https://aether-cloud.io/platform/observability</span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-500">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-sky-400"></i>
+          </div>
+        </div>
+
+        <!-- Website Image -->
+        <div class="browser-body relative aspect-[16/9] bg-[#090c14]">
+          <img
+            src="assets/images/sample-website-desktop.png"
+            alt="Sample Website Preview"
+            id="heroSampleImg"
+            class="w-full h-full object-cover select-none"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================== -->
+  <!-- MASTER PINNED SCROLL STAGE                               -->
+  <!-- ======================================================== -->
+  <section id="masterScrollStage" class="relative w-full">
+    <div id="pinStageViewport" class="w-full h-screen relative flex items-center justify-center overflow-hidden z-20">
+
+      <!-- 1. DESKTOP SHOWCASE -->
+      <div id="desktopShowcaseContainer" class="relative flex items-center justify-center w-full max-w-5xl h-auto z-30" style="will-change: transform; transform: translateZ(0);">
+
+        <div id="desktopBrowserFrame" class="browser-mockup w-full relative">
+          <!-- Browser Chrome -->
+          <div id="desktopBrowserHeader" class="browser-header">
+            <div class="flex items-center gap-2">
+              <span class="mac-dot red"></span>
+              <span class="mac-dot yellow"></span>
+              <span class="mac-dot green"></span>
+            </div>
+            <div class="browser-address-bar">
+              <i data-lucide="globe" class="w-3 h-3 text-sky-400"></i>
+              <span>https://aether-cloud.io/platform/observability</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs font-mono text-slate-400">
+              <span class="hidden sm:inline-block px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">200 OK</span>
+            </div>
+          </div>
+
+          <!-- Website Image Body -->
+          <div id="desktopImageContainer" class="browser-body relative w-full aspect-[16/9] overflow-hidden bg-[#090c14]">
+            <img
+              src="assets/images/sample-website-desktop.png"
+              alt="Sample Website Desktop Showcase"
+              id="interactiveDesktopImg"
+              class="w-full h-full object-cover"
+              style="will-change: transform; transform: translateZ(0);"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2. MOBILE SHOWCASE (↑ Portrait → Landscape) -->
+      <div id="mobileShowcaseContainer" class="absolute inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none z-35 px-4">
+
+        <!-- Orientation Indicator Pill -->
+        <div class="orientation-pill">
+          <span id="mobileOrientationArrow" class="font-bold text-xl text-sky-400" style="display: inline-block; transition: transform 0.2s ease;">↑</span>
+          <span id="mobileOrientationLabel" class="text-xs font-mono tracking-wider uppercase text-slate-300">Portrait</span>
+        </div>
+
+        <!-- Mobile Viewport Card (Authentic Physical Smartphone Chassis) -->
+        <div class="mobile-viewport-wrapper">
+          <div id="mobileViewportCard" class="mobile-viewport-card">
+
+            <!-- Hardware Side Buttons -->
+            <div class="phone-button phone-btn-action"></div>
+            <div class="phone-button phone-btn-vol-up"></div>
+            <div class="phone-button phone-btn-vol-down"></div>
+            <div class="phone-button phone-btn-power"></div>
+
+            <!-- Hardware Dynamic Island (Camera / Sensor Pill on Chassis) -->
+            <div class="phone-dynamic-island">
+              <span class="phone-camera-lens"></span>
+              <span class="phone-sensor-dot"></span>
+            </div>
+
+            <!-- Glass Screen Bezel Container -->
+            <div class="mobile-viewport-screen" id="mobileViewportScreen">
+
+              <!-- 1. Portrait Website Screen -->
+              <img
+                src="assets/images/sample-website-mobile-portrait.png"
+                alt="Mobile Portrait Website"
+                id="mobilePortraitImg"
+              />
+
+              <!-- 2. Landscape Website Screen (Counter-rotated inside phone for 100% horizontal alignment) -->
+              <div id="mobileLandscapeContainer" class="mobile-landscape-container">
+                <img
+                  src="assets/images/sample-website-mobile-landscape.png"
+                  alt="Mobile Landscape Website"
+                  id="mobileLandscapeImg"
+                />
+              </div>
+
+              <!-- Screen Glass Glare Accent -->
+              <div class="phone-screen-glare"></div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================== -->
+  <!-- CONTACT US SECTION                                       -->
+  <!-- ======================================================== -->
+  <section id="contactSection" class="relative min-h-screen py-24 px-6 z-20 flex flex-col justify-center">
+    <div class="max-w-5xl mx-auto w-full">
+
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-sky-500/30 text-xs font-mono text-sky-400 mb-4 shadow-lg backdrop-blur-md">
+          <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+          <span>GET IN TOUCH</span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+          Let's Build Something <span class="text-gradient-cyan">Extraordinary</span>
+        </h2>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+          Ready to elevate your digital presence with high-impact scrollytelling, custom interactive platforms, or responsive design? Send us a message.
+        </p>
+      </div>
+
+      <!-- Contact Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Left Column: Agency Credentials -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- Office Card -->
+          <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-xl relative overflow-hidden">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-5 h-5 text-sky-400"></i>
+              <span>Studio Headquarters</span>
+            </h3>
+
+            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Nexus Craft Studio<br>
+              450 Innovation Parkway, Suite 800<br>
+              San Francisco, CA 94107
+            </p>
+
+            <div class="space-y-4 text-sm text-slate-300">
+              <a href="mailto:hello@nexuscraft.studio" class="flex items-center gap-3 hover:text-sky-400 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400">
+                  <i data-lucide="at-sign" class="w-4 h-4"></i>
+                </div>
+                <span>hello@nexuscraft.studio</span>
+              </a>
+
+              <a href="tel:+18005550199" class="flex items-center gap-3 hover:text-sky-400 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </div>
+                <span>+1 (800) 555-0199</span>
+              </a>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-400">Response time</span>
+              <span class="text-xs font-mono text-emerald-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                Under 24 hours
+              </span>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="flex items-center gap-3 px-2">
+            <a href="#" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-white transition-all shadow-sm">
+              <i data-lucide="github" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-white transition-all shadow-sm">
+              <i data-lucide="twitter" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-white transition-all shadow-sm">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-slate-400 hover:text-white transition-all shadow-sm">
+              <i data-lucide="dribbble" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Contact Form -->
+        <div class="lg:col-span-7">
+          <div class="glass-panel-glow p-6 sm:p-10 rounded-3xl border border-indigo-500/30 relative">
+
+            <form id="clientContactForm" onsubmit="handleContactSubmit(event)" class="space-y-6">
+
+              <!-- Name & Email Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="clientName" class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2">
+                    Your Name *
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="clientName"
+                      name="clientName"
+                      required
+                      placeholder="e.g. Alex Morgan"
+                      class="form-input pl-11"
+                    />
+                    <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="clientEmail" class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2">
+                    Work Email *
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="email"
+                      id="clientEmail"
+                      name="clientEmail"
+                      required
+                      placeholder="alex@company.com"
+                      class="form-input pl-11"
+                    />
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Service Type Selector -->
+              <div>
+                <label class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2.5">
+                  Project Scope / Interest
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="serviceOptions">
+                  <button type="button" class="service-pill px-3.5 py-2.5 rounded-xl border border-sky-500 bg-sky-500/10 text-xs font-medium text-white transition-all text-left flex items-center justify-between" onclick="selectService(this)">
+                    <span>Interactive Website</span>
+                    <i data-lucide="check" class="w-3.5 h-3.5 text-sky-400"></i>
+                  </button>
+                  <button type="button" class="service-pill px-3.5 py-2.5 rounded-xl border border-white/10 bg-white/[0.02] text-xs font-medium text-slate-300 hover:border-sky-500/50 hover:text-white transition-all text-left flex items-center justify-between" onclick="selectService(this)">
+                    <span>Mobile App UI/UX</span>
+                    <i data-lucide="check" class="w-3.5 h-3.5 text-sky-400 hidden"></i>
+                  </button>
+                  <button type="button" class="service-pill px-3.5 py-2.5 rounded-xl border border-white/10 bg-white/[0.02] text-xs font-medium text-slate-300 hover:border-sky-500/50 hover:text-white transition-all text-left flex items-center justify-between" onclick="selectService(this)">
+                    <span>Platform Redesign</span>
+                    <i data-lucide="check" class="w-3.5 h-3.5 text-sky-400 hidden"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Budget Range -->
+              <div>
+                <label class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2.5">
+                  Estimated Budget
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <label class="budget-pill-label cursor-pointer">
+                    <input type="radio" name="budget" value="10k-25k" checked class="peer hidden">
+                    <div class="px-3 py-2 rounded-xl border border-white/10 bg-white/[0.02] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 text-xs font-mono text-center text-slate-400 transition-all">
+                      $10k – $25k
+                    </div>
+                  </label>
+                  <label class="budget-pill-label cursor-pointer">
+                    <input type="radio" name="budget" value="25k-50k" class="peer hidden">
+                    <div class="px-3 py-2 rounded-xl border border-white/10 bg-white/[0.02] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 text-xs font-mono text-center text-slate-400 transition-all">
+                      $25k – $50k
+                    </div>
+                  </label>
+                  <label class="budget-pill-label cursor-pointer">
+                    <input type="radio" name="budget" value="50k-100k" class="peer hidden">
+                    <div class="px-3 py-2 rounded-xl border border-white/10 bg-white/[0.02] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 text-xs font-mono text-center text-slate-400 transition-all">
+                      $50k – $100k
+                    </div>
+                  </label>
+                  <label class="budget-pill-label cursor-pointer">
+                    <input type="radio" name="budget" value="100k+" class="peer hidden">
+                    <div class="px-3 py-2 rounded-xl border border-white/10 bg-white/[0.02] peer-checked:border-indigo-500 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300 text-xs font-mono text-center text-slate-400 transition-all">
+                      $100k+
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Message Textarea -->
+              <div>
+                <label for="clientMessage" class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2">
+                  Project Details & Goals *
+                </label>
+                <textarea
+                  id="clientMessage"
+                  name="clientMessage"
+                  rows="4"
+                  required
+                  placeholder="Tell us about your project vision, timeline, and key requirements..."
+                  class="form-input resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-2">
+                <button
+                  type="submit"
+                  id="formSubmitBtn"
+                  class="btn-glow w-full flex items-center justify-center gap-2 text-sm uppercase tracking-wider font-bold"
+                >
+                  <span id="submitBtnText">Send Project Inquiry</span>
+                  <i data-lucide="arrow-right" id="submitBtnIcon" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Form Success Confirmation -->
+              <div id="formSuccessAlert" class="hidden p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-start gap-3">
+                <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-bold text-white">Inquiry Received Successfully!</h4>
+                  <p class="text-xs text-emerald-200/80 mt-0.5">
+                    Thank you! Our team will review your project brief and get in touch within 24 hours.
+                  </p>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+        <p>© 2026 NexusCraft Interactive Studio. All rights reserved.</p>
+        <button onclick="scrollToTop()" class="flex items-center gap-2 hover:text-sky-400 transition-colors">
+          <span>Back to Top</span>
+          <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+        </button>
+      </footer>
+
+    </div>
+  </section>
+
+  <!-- High-DPI Canvas Mockup Generator & Application Controller -->
+  <script src="mockup-generator.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+/* Nexus Craft Studio - Next-Gen Scrollytelling Stylesheet (v4.0 — Dark Only) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --bg-primary: #07090e;
+  --bg-secondary: #0d111a;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(15, 23, 42, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-card: rgba(18, 26, 43, 0.85);
+  --glow-color: rgba(99, 102, 241, 0.35);
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #6366f1;
+  --input-bg: rgba(13, 17, 26, 0.8);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  scroll-behavior: auto !important;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Ambient Glowing Background Lights */
+.ambient-glow-wrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.38;
+  will-change: transform;
+}
+
+.orb-1 {
+  top: -10%;
+  left: 10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.6) 0%, rgba(99, 102, 241, 0) 70%);
+  animation: floatOrb 22s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  top: 40%;
+  right: -5%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.5) 0%, rgba(14, 165, 233, 0) 70%);
+  animation: floatOrb 26s ease-in-out infinite alternate-reverse;
+}
+
+.orb-3 {
+  bottom: -10%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(168, 85, 247, 0) 70%);
+  animation: floatOrb 30s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 40px) scale(1.08); }
+  100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* Subtle Grid Pattern Overlay */
+.grid-bg-overlay {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-panel-glow {
+  background: var(--glass-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.5), 0 0 40px -10px var(--glow-color);
+}
+
+/* Text Gradients */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #ffffff 10%, #38bdf8 70%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-neon {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Browser Frame Mockup */
+.browser-mockup {
+  position: relative;
+  background: #0f1422;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -15px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 60px -10px rgba(99, 102, 241, 0.3);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.browser-header {
+  height: 42px;
+  background: #151b2c;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  z-index: 10;
+  position: relative;
+  overflow: hidden;
+}
+
+.mac-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.mac-dot.red { background: #ef4444; }
+.mac-dot.yellow { background: #f59e0b; }
+.mac-dot.green { background: #10b981; }
+
+.browser-address-bar {
+  flex: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 26px;
+  background: #0b101c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94a3b8;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.browser-body {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #090c14;
+}
+
+.browser-body img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#interactiveDesktopImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  background-color: #090c14;
+  display: block;
+}
+
+/* ======================================================== */
+/* AUTHENTIC PHYSICAL SMARTPHONE DEVICE (19.5:9 RATIO)     */
+/* ======================================================== */
+.mobile-viewport-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+  perspective-origin: center center;
+}
+
+.mobile-viewport-card {
+  position: relative;
+  /* Fixed physical smartphone dimensions - never deforms, rotates as 1 solid object */
+  width: 240px;
+  height: 480px;
+  background: #080c14;
+  border-radius: 38px;
+  border: 3px solid #1e293b;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 25px 65px -10px rgba(0, 0, 0, 0.95),
+    0 0 40px -10px rgba(56, 189, 248, 0.3);
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hardware Buttons */
+.phone-button {
+  position: absolute;
+  background: #334155;
+  border-radius: 2px;
+  z-index: 10;
+}
+.phone-btn-action {
+  left: -5px;
+  top: 65px;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px 0 0 2px;
+}
+.phone-btn-vol-up {
+  left: -5px;
+  top: 92px;
+  width: 3px;
+  height: 32px;
+  border-radius: 2px 0 0 2px;
+}
+.phone-btn-vol-down {
+  left: -5px;
+  top: 132px;
+  width: 3px;
+  height: 32px;
+  border-radius: 2px 0 0 2px;
+}
+.phone-btn-power {
+  right: -5px;
+  top: 105px;
+  width: 3px;
+  height: 44px;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Physical Dynamic Island (Camera / Sensors) */
+.phone-dynamic-island {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 68px;
+  height: 18px;
+  background: #000000;
+  border-radius: 12px;
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  gap: 6px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.phone-camera-lens {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  display: inline-block;
+}
+
+.phone-sensor-dot {
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: #080c14;
+  display: inline-block;
+}
+
+/* Viewport Screen */
+.mobile-viewport-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 35px;
+  background: #090d16;
+}
+
+/* Portrait Image */
+#mobilePortraitImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+/* Landscape Container (Counter-rotated inside phone) */
+.mobile-landscape-container {
+  position: absolute;
+  width: 480px;
+  height: 240px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#mobileLandscapeImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Subtle Screen Reflection Glare */
+.phone-screen-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 50%);
+  z-index: 20;
+}
+
+/* Top Scroll Progress Line */
+.scroll-progress-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #38bdf8, #ec4899);
+  z-index: 100;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Form Styles */
+.form-input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  color: var(--input-text);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-input:focus {
+  border-color: var(--accent-indigo);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.form-input::placeholder {
+  color: #64748b;
+}
+
+/* Button with Gradient Glow */
+.btn-glow {
+  position: relative;
+  background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 14px;
+  padding: 14px 28px;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.6);
+}
+
+.btn-glow:active {
+  transform: translateY(0);
+}
+
+/* Minimal Mouse Wheel Animation */
+@keyframes mousePulse {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(7px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.mouse-dot-anim {
+  animation: mousePulse 2s ease-in-out infinite;
+}
+
+/* Gentle Levitation Float for Initial Showcase */
+@keyframes levitate {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.levitate-float {
+  animation: levitate 4.5s ease-in-out infinite;
+}
+
+/* Orientation indicator pill */
+.orientation-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
+}
